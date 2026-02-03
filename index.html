@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weedoo — Vidéos prêtes à publier</title>
+    <meta
+      name="description"
+      content="Weedoo NOT YES transforme tes idées en vidéos prêtes à publier. Tarifs à la vidéo ou abonnements mensuels."
+    />
+    <meta name="theme-color" content="#0b0f1a" />
+
+    <style>
+      :root {
+        --bg: #0b0f1a;
+        --panel: rgba(255, 255, 255, 0.06);
+        --panel2: rgba(255, 255, 255, 0.08);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.70);
+        --muted2: rgba(255, 255, 255, 0.55);
+        --line: rgba(255, 255, 255, 0.12);
+        --accent: #6ee7ff;
+        --accent2: #a78bfa;
+        --ok: #34d399;
+        --warn: #fbbf24;
+        --shadow: 0 18px 50px rgba(0,0,0,0.55);
+        --radius: 18px;
+        --radius2: 24px;
+        --max: 1100px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: radial-gradient(1200px 600px at 20% -10%, rgba(110,231,255,0.18), transparent 60%),
+                    radial-gradient(900px 500px at 90% 0%, rgba(167,139,250,0.18), transparent 60%),
+                    var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+      /* Header */
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(10px);
+        background: rgba(11, 15, 26, 0.75);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+        gap: 14px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(110,231,255,0.9), rgba(167,139,250,0.85));
+        box-shadow: 0 10px 30px rgba(110,231,255,0.18);
+      }
+      .navlinks {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .navlinks a {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .navlinks a:hover { color: var(--text); text-decoration: none; }
+      .cta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.06);
+        color: var(--text);
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255,255,255,0.09);
+        border-color: rgba(255,255,255,0.18);
+        text-decoration: none;
+      }
+      .btn.primary {
+        border-color: rgba(110,231,255,0.35);
+        background: linear-gradient(135deg, rgba(110,231,255,0.18), rgba(167,139,250,0.16));
+      }
+      .btn.primary:hover {
+        border-color: rgba(110,231,255,0.6);
+      }
+      .btn.ghost { background: transparent; }
+
+      /* Hero */
+      .hero {
+        padding: 66px 0 26px;
+      }
+      .heroGrid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 26px;
+        align-items: stretch;
+      }
+      .card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: var(--radius2);
+        box-shadow: var(--shadow);
+      }
+      .heroCard {
+        padding: 30px;
+        overflow: hidden;
+        position: relative;
+      }
+      .heroCard:before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(700px 300px at 15% 10%, rgba(110,231,255,0.14), transparent 60%),
+                    radial-gradient(650px 320px at 90% 10%, rgba(167,139,250,0.14), transparent 60%);
+        pointer-events: none;
+      }
+      .heroInner { position: relative; }
+      .pillRow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .pill {
+        font-size: 12px;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        padding: 6px 10px;
+        border-radius: 999px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 40px;
+        line-height: 1.08;
+        letter-spacing: -0.6px;
+      }
+      .lead {
+        margin: 14px 0 18px;
+        color: var(--muted);
+        font-size: 16px;
+        max-width: 58ch;
+      }
+      .heroActions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .miniNote {
+        margin-top: 14px;
+        color: var(--muted2);
+        font-size: 13px;
+      }
+
+      .sideCard {
+        padding: 22px;
+      }
+      .sideTitle {
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+      .checklist {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .checklist li {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        gap: 10px;
+        align-items: start;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 5px;
+        border-radius: 99px;
+        background: linear-gradient(135deg, rgba(52,211,153,0.9), rgba(110,231,255,0.55));
+      }
+
+      /* Sections */
+      section { padding: 34px 0; }
+      .sectionHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .sectionHeader h2 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: -0.2px;
+      }
+      .sectionHeader p {
+        margin: 0;
+        color: var(--muted2);
+        font-size: 14px;
+        max-width: 65ch;
+      }
+
+      .grid3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .feature {
+        padding: 18px;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+      }
+      .feature h3 { margin: 0 0 8px; font-size: 15px; }
+      .feature p { margin: 0; color: var(--muted); font-size: 14px; }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .step {
+        padding: 16px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--radius);
+      }
+      .stepNum {
+        display: inline-flex;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        color: rgba(0,0,0,0.8);
+        background: linear-gradient(135deg, rgba(110,231,255,0.9), rgba(167,139,250,0.85));
+      }
+      .step h3 { margin: 10px 0 6px; font-size: 15px; }
+      .step p { margin: 0; color: var(--muted); font-size: 14px; }
+
+      /* Pricing */
+      .pricingWrap { display: grid; gap: 14px; }
+      .pricingTop {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .priceBox {
+        padding: 20px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--radius2);
+      }
+      .priceBox h3 { margin: 0 0 8px; font-size: 16px; }
+      .priceBig {
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: -0.4px;
+        margin: 6px 0 6px;
+      }
+      .priceMeta { color: var(--muted); font-size: 14px; margin: 0; }
+
+      .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .plan {
+        padding: 20px;
+        border-radius: var(--radius2);
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        position: relative;
+        overflow: hidden;
+      }
+      .plan.recommended {
+        border-color: rgba(110,231,255,0.35);
+        background: linear-gradient(135deg, rgba(110,231,255,0.10), rgba(167,139,250,0.08));
+      }
+      .badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(110,231,255,0.35);
+        background: rgba(110,231,255,0.12);
+        color: var(--text);
+      }
+      .plan h3 { margin: 0; font-size: 16px; }
+      .planPrice {
+        margin: 8px 0 0;
+        font-size: 28px;
+        font-weight: 900;
+        letter-spacing: -0.4px;
+      }
+      .per {
+        color: var(--muted);
+        font-size: 14px;
+        margin-top: 4px;
+      }
+      .planLine {
+        height: 1px;
+        background: var(--line);
+        margin: 14px 0;
+      }
+      .planList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .planList li {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        gap: 10px;
+        align-items: start;
+      }
+      .tick {
+        width: 12px;
+        height: 12px;
+        margin-top: 4px;
+        border-radius: 3px;
+        background: rgba(52,211,153,0.85);
+        box-shadow: 0 6px 18px rgba(52,211,153,0.12);
+      }
+
+      /* FAQ */
+      .faq {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      details {
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+        border-radius: var(--radius);
+        padding: 14px 14px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--text);
+        list-style: none;
+      }
+      summary::-webkit-details-marker { display: none; }
+      details p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* Contact */
+      .contactGrid {
+        display: grid;
+        grid-template-columns: 1fr 0.8fr;
+        gap: 14px;
+        align-items: start;
+      }
+      form {
+        display: grid;
+        gap: 12px;
+      }
+      label { font-size: 13px; color: var(--muted); }
+      input, textarea, select {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: rgba(0,0,0,0.18);
+        color: var(--text);
+        border-radius: 12px;
+        padding: 12px 12px;
+        outline: none;
+        font-size: 14px;
+      }
+      textarea { min-height: 120px; resize: vertical; }
+      input:focus, textarea:focus, select:focus {
+        border-color: rgba(110,231,255,0.45);
+        box-shadow: 0 0 0 3px rgba(110,231,255,0.12);
+      }
+      .contactSide {
+        padding: 18px;
+        border-radius: var(--radius2);
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.05);
+      }
+      .contactSide h3 { margin: 0 0 8px; font-size: 16px; }
+      .contactSide p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+      .linkRow { display: flex; gap: 10px; flex-wrap: wrap; }
+
+      /* Footer */
+      footer {
+        padding: 26px 0 40px;
+        border-top: 1px solid var(--line);
+        margin-top: 28px;
+        color: var(--muted2);
+        font-size: 14px;
+      }
+      .footerRow {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .footerLinks { display: flex; gap: 14px; flex-wrap: wrap; }
+      .small { font-size: 12px; color: var(--muted2); margin-top: 10px; }
+
+      /* Mobile */
+      @media (max-width: 960px) {
+        .heroGrid { grid-template-columns: 1fr; }
+        .grid3 { grid-template-columns: 1fr; }
+        .steps { grid-template-columns: 1fr; }
+        .pricingTop { grid-template-columns: 1fr; }
+        .plans { grid-template-columns: 1fr; }
+        .faq { grid-template-columns: 1fr; }
+        .contactGrid { grid-template-columns: 1fr; }
+        .navlinks { display: none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="nav">
+          <a class="brand" href="#top" aria-label="Aller à l'accueil">
+            <span class="logo" aria-hidden="true"></span>
+            <span>Weedoo</span>
+          </a>
+
+          <nav class="navlinks" aria-label="Navigation">
+            <a href="#fonctionnement">Fonctionnement</a>
+            <a href="#tarifs">Tarifs</a>
+            <a href="#contact">Contact</a>
+            <a href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
+          </nav>
+
+          <div class="cta">
+            <a class="btn ghost" href="#contact">Contact</a>
+            <a class="btn primary" href="#tarifs">Voir les tarifs</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <div class="container">
+        <section class="hero" aria-label="Présentation">
+          <div class="heroGrid">
+            <div class="card heroCard">
+              <div class="heroInner">
+                <div class="pillRow">
+                  <span class="pill">Vidéos prêtes à publier</span>
+                  <span class="pill">Process simple</span>
+                  <span class="pill">Abonnements ou à l’unité</span>
+                </div>
+
+                <h1>Weedoo transforme tes idées en vidéos prêtes à publier.</h1>
+                <p class="lead">
+                  Tu envoies un brief clair, Weedoo produit, tu ajustes si besoin, et tu récupères une vidéo exploitable tout de suite sur tes réseaux.
+                </p>
+
+                <div class="heroActions">
+                  <a class="btn primary" href="#tarifs">Tester et choisir un tarif</a>
+                  <a class="btn" href="#fonctionnement">Voir comment ça marche</a>
+                </div>
+
+                <p class="miniNote">
+                  Astuce: la première vidéo à 1 € convertit mieux si tu limites à 1 par client et si tu cadres ce qui est inclus.
+                </p>
+              </div>
+            </div>
+
+            <aside class="card sideCard" aria-label="Résumé">
+              <p class="sideTitle">Ce que Weedoo fait</p>
+              <ul class="checklist">
+                <li><span class="dot" aria-hidden="true"></span><span>Création vidéo à partir d’un brief (objectif, style, durée, exemples).</span></li>
+                <li><span class="dot" aria-hidden="true"></span><span>Retours simples (itérations) pour converger vite.</span></li>
+                <li><span class="dot" aria-hidden="true"></span><span>Livraison prête pour réseaux sociaux (formats adaptés).</span></li>
+                <li><span class="dot" aria-hidden="true"></span><span>Option abonnements si tu publies régulièrement.</span></li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section id="fonctionnement" aria-label="Fonctionnement">
+          <div class="sectionHeader">
+            <div>
+              <h2>Fonctionnement</h2>
+              <p>Un flux simple, conçu pour livrer vite et réduire les aller-retours inutiles.</p>
+            </div>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <span class="stepNum">1</span>
+              <h3>Brief</h3>
+              <p>Objectif, audience, style, durée, exemples et contraintes.</p>
+            </div>
+            <div class="step">
+              <span class="stepNum">2</span>
+              <h3>Production</h3>
+              <p>Weedoo produit une première version à partir de ton brief.</p>
+            </div>
+            <div class="step">
+              <span class="stepNum">3</span>
+              <h3>Retours</h3>
+              <p>Tu demandes les ajustements nécessaires, sans complexité.</p>
+            </div>
+            <div class="step">
+              <span class="stepNum">4</span>
+              <h3>Livraison</h3>
+              <p>Vidéo finale prête à publier, avec formats si besoin.</p>
+            </div>
+          </div>
+
+          <div style="height: 14px"></div>
+
+          <div class="grid3" aria-label="Bénéfices">
+            <div class="feature">
+              <h3>Moins de friction</h3>
+              <p>Tu sais quoi envoyer, tu sais quoi attendre, et tu avances.</p>
+            </div>
+            <div class="feature">
+              <h3>Rythme régulier</h3>
+              <p>Les abonnements stabilisent la production si tu publies souvent.</p>
+            </div>
+            <div class="feature">
+              <h3>Lisible pour le client</h3>
+              <p>Tarifs clairs: à la vidéo ou au mois, sans ambiguïté.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="tarifs" aria-label="Tarifs">
+          <div class="sectionHeader">
+            <div>
+              <h2>Tarifs</h2>
+              <p>Choisis entre paiement à la vidéo ou abonnement mensuel. Les abonnements baissent le coût effectif par vidéo.</p>
+            </div>
+          </div>
+
+          <div class="pricingWrap">
+            <div class="pricingTop">
+              <div class="priceBox">
+                <h3>Paiement à la vidéo</h3>
+                <div class="priceBig">1 €</div>
+                <p class="priceMeta">Première vidéo (1 vidéo)</p>
+                <div class="planLine"></div>
+                <div class="priceBig" style="margin-top: 0;">7,99 €</div>
+                <p class="priceMeta">À l’unité à partir de la deuxième</p>
+              </div>
+
+              <div class="priceBox">
+                <h3>Conseil rapide</h3>
+                <p class="priceMeta" style="margin-top: 10px;">
+                  Pour garder l’offre “1 €” rentable:
+                </p>
+                <ul class="planList" style="margin-top: 12px;">
+                  <li><span class="tick" aria-hidden="true"></span><span>Limiter à 1 test par client (ou par entreprise).</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Définir ce qui est inclus (durée, format, 1 round de retours).</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Orienter ensuite vers Essentiel ou Avancé.</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="plans" aria-label="Abonnements">
+              <div class="plan">
+                <h3>Essentiel</h3>
+                <div class="planPrice">49,99 €</div>
+                <div class="per">/ mois • 7 vidéos • ~ 7,14 € / vidéo</div>
+                <div class="planLine"></div>
+                <ul class="planList">
+                  <li><span class="tick" aria-hidden="true"></span><span>7 vidéos / mois</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Idéal si tu publies 1 à 2 fois par semaine</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Support via contact</span></li>
+                </ul>
+                <div style="height: 14px"></div>
+                <a class="btn primary" href="#contact" data-plan="Essentiel">Choisir Essentiel</a>
+              </div>
+
+              <div class="plan recommended">
+                <span class="badge">Le plus choisi</span>
+                <h3>Avancé</h3>
+                <div class="planPrice">99,99 €</div>
+                <div class="per">/ mois • 15 vidéos • ~ 6,67 € / vidéo</div>
+                <div class="planLine"></div>
+                <ul class="planList">
+                  <li><span class="tick" aria-hidden="true"></span><span>15 vidéos / mois</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Bon compromis volume / coût</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Adapté à un calendrier de publication soutenu</span></li>
+                </ul>
+                <div style="height: 14px"></div>
+                <a class="btn primary" href="#contact" data-plan="Avancé">Choisir Avancé</a>
+              </div>
+
+              <div class="plan">
+                <h3>Premium</h3>
+                <div class="planPrice">149,99 €</div>
+                <div class="per">/ mois • 22 vidéos • ~ 6,82 € / vidéo</div>
+                <div class="planLine"></div>
+                <ul class="planList">
+                  <li><span class="tick" aria-hidden="true"></span><span>22 vidéos / mois</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Pour équipes, marques, ou multi-comptes</span></li>
+                  <li><span class="tick" aria-hidden="true"></span><span>Flux stable sur tout le mois</span></li>
+                </ul>
+                <div style="height: 14px"></div>
+                <a class="btn primary" href="#contact" data-plan="Premium">Choisir Premium</a>
+              </div>
+            </div>
+
+            <div class="faq" aria-label="Questions fréquentes">
+              <details>
+                <summary>Qu’est-ce qui est inclus dans “une vidéo” ?</summary>
+                <p>
+                  À définir selon ton offre. Recommandation: préciser une durée cible (ex: 15 à 45s), un format (9:16, 1:1, 16:9),
+                  et un nombre de rounds de retours (ex: 1 ou 2).
+                </p>
+              </details>
+
+              <details>
+                <summary>Les vidéos non utilisées se reportent au mois suivant ?</summary>
+                <p>
+                  Décision produit. Si tu autorises le report, mets une limite (ex: 20% du pack) pour éviter l’accumulation.
+                  Sinon, assume “use it or lose it” et compense avec un délai de livraison plus rapide.
+                </p>
+              </details>
+
+              <details>
+                <summary>Quel est le délai de livraison ?</summary>
+                <p>
+                  À ajuster selon ton opérationnel. Tu peux afficher une fourchette (ex: 48–72h) et préciser que cela dépend de la complexité et de la file.
+                </p>
+              </details>
+
+              <details>
+                <summary>Comment fonctionne l’offre “première vidéo à 1 €” ?</summary>
+                <p>
+                  Recommandation: 1 par client/entreprise, avec un périmètre clair (durée max, format, 1 round de retours).
+                  Objectif: qualifier et convertir vers abonnement.
+                </p>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" aria-label="Contact">
+          <div class="sectionHeader">
+            <div>
+              <h2>Contact</h2>
+              <p>Explique ton besoin en 2 minutes. Si tu as des exemples de style, ajoute un lien.</p>
+            </div>
+          </div>
+
+          <div class="contactGrid">
+            <div class="card" style="padding: 20px;">
+              <form id="contactForm">
+                <div style="display:grid; gap: 6px;">
+                  <label for="name">Nom</label>
+                  <input id="name" name="name" autocomplete="name" required />
+                </div>
+
+                <div style="display:grid; gap: 6px;">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" required />
+                </div>
+
+                <div style="display:grid; gap: 6px;">
+                  <label for="topic">Sujet</label>
+                  <select id="topic" name="topic">
+                    <option value="Devis">Devis</option>
+                    <option value="Question">Question</option>
+                    <option value="Partenariat">Partenariat</option>
+                  </select>
+                </div>
+
+                <div style="display:grid; gap: 6px;">
+                  <label for="message">Message</label>
+                  <textarea id="message" name="message" required placeholder="Objectif, style, durée, volume, lien d’exemples..."></textarea>
+                </div>
+
+                <button class="btn primary" type="submit">Envoyer</button>
+                <p class="miniNote" style="margin: 0;">
+                  Le bouton ouvre ton client mail avec un message pré-rempli (simple et fiable). Si tu veux un envoi direct, on branche un endpoint (Netlify Forms / Formspree).
+                </p>
+              </form>
+            </div>
+
+            <aside class="contactSide">
+              <h3>Liens</h3>
+              <p>Tu peux aussi nous écrire via Instagram.</p>
+              <div class="linkRow">
+                <a class="btn" href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
+                <a class="btn" href="#tarifs">Tarifs</a>
+              </div>
+
+              <div style="height: 12px;"></div>
+
+              <h3>À préparer pour aller vite</h3>
+              <ul class="planList">
+                <li><span class="tick" aria-hidden="true"></span><span>1 ou 2 vidéos d’inspiration</span></li>
+                <li><span class="tick" aria-hidden="true"></span><span>Durée cible et format (9:16, 1:1, 16:9)</span></li>
+                <li><span class="tick" aria-hidden="true"></span><span>Nombre de vidéos / semaine</span></li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <footer>
+          <div class="footerRow">
+            <div>
+              <div style="font-weight: 700; color: var(--text);">Weedoo</div>
+              <div class="small">© <span id="year"></span> Weedoo. Tous droits réservés.</div>
+            </div>
+            <div class="footerLinks">
+              <a href="#fonctionnement">Fonctionnement</a>
+              <a href="#tarifs">Tarifs</a>
+              <a href="#contact">Contact</a>
+              <a href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
+              <a href="#" onclick="alert('Ajoute ici tes mentions légales / politique de confidentialité.'); return false;">Mentions légales</a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+
+    <script>
+      // Année footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Pré-remplissage du sujet (quand on clique "Choisir Essentiel/Avancé/Premium")
+      const planButtons = document.querySelectorAll("[data-plan]");
+      planButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const plan = btn.getAttribute("data-plan");
+          const topic = document.getElementById("topic");
+          const message = document.getElementById("message");
+          topic.value = "Devis";
+          const preset =
+            `Je veux prendre le plan ${plan}.\n\n` +
+            `Objectif:\n` +
+            `Style / références:\n` +
+            `Durée / format:\n` +
+            `Contraintes:\n`;
+          if (!message.value.trim()) message.value = preset;
+        });
+      });
+
+      // Envoi via mailto (fiable en statique)
+      document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const topic = document.getElementById("topic").value;
+        const message = document.getElementById("message").value.trim();
+
+        // TODO: remplace par ton email de réception
+        const to = "contact@weedoo.com";
+
+        const subject = encodeURIComponent(`[Weedoo] ${topic} — ${name}`);
+        const body = encodeURIComponent(
+          `Nom: ${name}\n` +
+          `Email: ${email}\n` +
+          `Sujet: ${topic}\n\n` +
+          `${message}\n`
+        );
+
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      });
+    </script>
+  </body>
+</html>
